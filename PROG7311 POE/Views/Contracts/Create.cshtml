@@ -1,0 +1,58 @@
+﻿@model Contract
+
+<h2>Create Contract</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <label>Client</label>
+    <select asp-for="ClientId" class="form-control mb-2"
+            asp-items="@(new SelectList(ViewBag.Clients, "ClientId", "Name"))">
+    </select>
+    <span asp-validation-for="ClientId" class="text-danger"></span>
+
+
+
+    <div class="form-group">
+    <label>Start Date</label>
+    <input type="date" name="StartDate" class="form-control mb-2" />
+    <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+    <label>End Date</label>
+    <input type="date" name="EndDate" class="form-control mb-2" />
+    <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <label>Service Level</label>
+    <select name="ServiceLevel" class="form-control mb-2">
+        <option value="">-- Select Service Level --</option>
+        <option value="Standard">Standard</option>
+        <option value="Premium">Premium</option>
+    </select>
+    <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+
+
+    <label>Status</label>
+    <select name="Status" class="form-control mb-2">
+        <option value="">-- Select Status --</option>
+        <option value="Draft">Draft</option>
+        <option value="Active">Active</option>
+        <option value="Expired">Expired</option>
+        <option value="OnHold">On Hold</option>
+    </select>
+    <span asp-validation-for="Status" class="text-danger"></span>
+
+
+    <label>Signed Agreement (PDF)</label>
+    <input type="file" name="file" class="form-control mb-2" />
+
+    <button class="btn btn-success">Save</button>
+
+    <div class="text-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+</form>

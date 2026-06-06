@@ -1,0 +1,23 @@
+﻿@model Contract
+
+<h2>Edit Contract</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="ContractId" />
+
+    <select asp-for="ClientId" asp-items="ViewBag.ClientId" class="form-control mb-2"></select>
+
+    <input asp-for="StartDate" type="date" class="form-control mb-2" />
+    <input asp-for="EndDate" type="date" class="form-control mb-2" />
+
+    <select asp-for="Status" class="form-control mb-2">
+        <option>Draft</option>
+        <option>Active</option>
+        <option>Expired</option>
+        <option>OnHold</option>
+    </select>
+
+    <input asp-for="ServiceLevel" class="form-control mb-2" />
+
+    <button class="btn btn-primary">Update</button>
+</form>

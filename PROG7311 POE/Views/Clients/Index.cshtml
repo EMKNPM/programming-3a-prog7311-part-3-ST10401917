@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Client>
+
+<h2>Clients</h2>
+<a asp-action="Create" class="btn btn-primary">Add Client</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Region</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.ContactDetails</td>
+                <td>@item.Region</td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary"  asp-route-id="@item.ClientId">Edit</a>    
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ClientId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

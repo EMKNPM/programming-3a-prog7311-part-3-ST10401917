@@ -1,0 +1,12 @@
+﻿@model ServiceRequest
+
+<h2>Delete Request</h2>
+
+<p>Are you sure you want to delete this request?</p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ServiceRequestId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+</form>

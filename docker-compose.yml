@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+
+  # -------------------------
+  # SQL SERVER DATABASE
+  # -------------------------
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Sa@12345678"
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  # -------------------------
+  # WEB API (BACKEND)
+  # -------------------------
+  api:
+    build:
+      context: ./PROG7311.API   # <-- adjust to your API project folder
+      dockerfile: Dockerfile
+    container_name: glms-backend-api
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GLMS_DB;User Id=sa;Password=Sa@12345678;TrustServerCertificate=True;Encrypt=True;
+    networks:
+      - app-network
+
+  # -------------------------
+  # MVC FRONTEND
+  # -------------------------
+  mvc:
+    build:
+      context: ./PROG7311 POE # <-- adjust to MVC project folder
+      dockerfile: Dockerfile
+    container_name: glms-frontend-web
+    depends_on:
+      - api
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ApiBaseUrl=http://api:8080/
+    networks:
+      - app-network
+
+# -------------------------
+# NETWORK SHARED BY ALL CONTAINERS
+# -------------------------
+networks:
+  app-network:
+    driver: bridge
+
+# -------------------------
+# PERSISTENT DATABASE STORAGE
+# -------------------------
+volumes:
+  sql_data:

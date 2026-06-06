@@ -1,0 +1,47 @@
+﻿@model ServiceRequest
+
+<h2>Create Service Request</h2>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+
+    <select name="ContractId" class="form-control mb-2">
+        @{
+            var contracts = ViewBag.Contracts as List<Contract> ?? new List<Contract>();
+        }
+
+        @foreach (var c in contracts)
+        {
+            <option value="@c.ContractId">
+                @c.Client?.Name - #@c.ContractId (@c.Status)
+            </option>
+        }
+    </select>
+    <span asp-validation-for="ContractId" class="text-danger"></span>
+
+    <div class="form-group">
+        <input name="Description" class="form-control mb-2" placeholder="Description" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <input name="CostUSD" id="usd" class="form-control mb-2" placeholder="USD" />
+    <span asp-validation-for="CostUSD" class="text-danger"></span>
+
+
+    <input name="CostZAR" id="zar" class="form-control mb-2" placeholder="ZAR (auto)" readonly />
+
+    <button class="btn btn-success">Save</button>
+</form>
+
+<script>
+    document.getElementById("usd").addEventListener("input", async function () {
+        let res = await fetch('/ServiceRequests/GetRate');
+        let rate = await res.json();
+
+        document.getElementById("zar").value = this.value * rate;
+    });
+</script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

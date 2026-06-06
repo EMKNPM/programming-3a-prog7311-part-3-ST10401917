@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">TechMove Global Logistics Management System</h1>
+    <p class="lead">Add clients, create contracts, and service requests anytime anywhere</p>
+</div>
+
+<hr />
+
+<div class="row mt-4">
+
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h4 class="card-title">Clients</h4>
+                <p>Add client to the system</p>
+                <a asp-controller="Clients" asp-action="Index" class="btn btn-primary">
+                    View Clients
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h4 class="card-title">Contracts</h4>
+                <p>Create contracts and upload agreements.</p>
+                <a asp-controller="Contracts" asp-action="Index" class="btn btn-success">
+                    View Contracts
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h4 class="card-title">Service Requests</h4>
+                <p>Track service requests and currency conversion</p>
+                <a asp-controller="ServiceRequests" asp-action="Index" class="btn btn-warning">
+                    View Requests
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr />
+

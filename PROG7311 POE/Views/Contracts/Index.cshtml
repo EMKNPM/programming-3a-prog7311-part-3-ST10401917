@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Contract>
+
+<h2>Contracts</h2>
+
+<form method="get" class="row">
+    <div class="col">
+        <input type="date" name="startDate" class="form-control" />
+    </div>
+    <div class="col">
+        <input type="date" name="endDate" class="form-control" />
+    </div>
+    <div class="col">
+        <select name="status" class="form-control">
+            <option value="">All Status</option>
+            <option>Draft</option>
+            <option>Active</option>
+            <option>Expired</option>
+            <option>OnHold</option>
+        </select>
+    </div>
+    <div class="col">
+        <button class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+
+<a asp-action="Create" class="btn btn-success">New Contract</a>
+
+<table class="table table-striped mt-3">
+    <tr>
+        <th>Client</th>
+        <th>Status</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Service Level</th>
+        <th>File Download</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Client?.Name</td>
+            <td>@item.Status</td>
+            <td>@item.StartDate</td>
+            <td>@item.EndDate</td>
+            <td>@item.ServiceLevel</td>
+            <td>
+                @if (item.SignedAgreementPath != null)
+                {
+                    <a asp-action="Download" class="btn btn-primary" asp-route-path="@item.SignedAgreementPath">
+                        Download
+                    </a>
+                }
+            </td>
+            <td>
+                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ContractId">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
