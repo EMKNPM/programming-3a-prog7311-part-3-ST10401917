@@ -1,5 +1,6 @@
-using PROG7311_POE.Data;
 using Microsoft.EntityFrameworkCore;
+using PROG7311_POE.Data;
+using PROG7311_POE.Service;
 
 namespace PROG7311.API
 {
@@ -22,13 +23,14 @@ namespace PROG7311.API
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddHttpClient<ICurrencyService, CurrencyService>();
+
             var app = builder.Build();
 
-            // ADD THIS HERE (IMPORTANT)
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                db.Database.Migrate(); // creates DB + applies migrations
+                db.Database.Migrate(); 
             }
 
             app.UseSwagger();

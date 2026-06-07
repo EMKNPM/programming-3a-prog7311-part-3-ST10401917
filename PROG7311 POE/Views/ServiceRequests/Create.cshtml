@@ -8,13 +8,13 @@
     <select asp-for="ContractId" class="form-control mb-2">
         <option value="">-- Select a Contract --</option>
         @{
-            var contracts = ViewBag.Contracts as List<Contract> ?? new List<Contract>();
+            var contracts = ViewBag.Contracts as List<ContractReadDto> ?? new List<ContractReadDto>();
         }
 
         @foreach (var c in contracts)
         {
             <option value="@c.ContractId">
-                @c.Client?.Name - #@c.ContractId (@c.Status)
+                @c.ClientName - #@c.ContractId (@c.Status)
             </option>
         }
     </select>

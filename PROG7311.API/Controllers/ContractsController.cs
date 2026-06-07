@@ -5,6 +5,7 @@ using PROG7311_POE.API.DTOs;
 using PROG7311_POE.Data;
 using PROG7311_POE.Factories;
 using PROG7311_POE.Models;
+using PROG7311_POE.Service;
 
 namespace PROG7311_POE.Controllers
 {
@@ -13,10 +14,12 @@ namespace PROG7311_POE.Controllers
     public class ContractsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ContractNotificationService _notificationService;
 
         public ContractsController(AppDbContext context)
         {
             _context = context;
+            _notificationService = new ContractNotificationService();
         }
 
         // GET: api/contracts
@@ -103,6 +106,9 @@ namespace PROG7311_POE.Controllers
 
             _context.Contracts.Add(contract);
             await _context.SaveChangesAsync();
+
+            _notificationService.NotifyContractChange(contract);
+
 
             return Ok(contract);
         }

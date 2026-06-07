@@ -16,9 +16,7 @@ namespace PROG7311_POE.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        // -------------------------
         // ADD JWT TOKEN
-        // -------------------------
         private void AddAuthToken()
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("JwtToken");
@@ -32,9 +30,7 @@ namespace PROG7311_POE.Controllers
             }
         }
 
-        // -------------------------
         // INDEX
-        // -------------------------
         public async Task<IActionResult> Index()
         {
             AddAuthToken();
@@ -44,9 +40,7 @@ namespace PROG7311_POE.Controllers
             return View(data ?? new List<ContractReadDto>());
         }
 
-        // -------------------------
         // CREATE (GET)
-        // -------------------------
         public async Task<IActionResult> Create()
         {
             AddAuthToken();
@@ -58,9 +52,7 @@ namespace PROG7311_POE.Controllers
             return View();
         }
 
-        // -------------------------
-        // CREATE (POST) - FIXED 415
-        // -------------------------
+        // CREATE (POST)
         [HttpPost]
         public async Task<IActionResult> Create(Contract contract, IFormFile? file)
         {
@@ -94,8 +86,7 @@ namespace PROG7311_POE.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Clear the local Model State dictionary to strip out 
-                    // any cached raw 'Contract' references before moving to the DTO page
+
                     ModelState.Clear();
 
                     return RedirectToAction(nameof(Index));
@@ -109,9 +100,7 @@ namespace PROG7311_POE.Controllers
             }
         }
 
-        // -------------------------
         // DELETE (GET)
-        // -------------------------
         public async Task<IActionResult> Delete(int id)
         {
             AddAuthToken();
@@ -121,9 +110,7 @@ namespace PROG7311_POE.Controllers
             return View(contract);
         }
 
-        // -------------------------
         // DELETE (POST)
-        // -------------------------
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -134,9 +121,7 @@ namespace PROG7311_POE.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // -------------------------
         // DOWNLOAD FILE
-        // -------------------------
         public async Task<IActionResult> Download(string path)
         {
             AddAuthToken();

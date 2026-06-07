@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>Contract</th>
+            <th>Client Name</th>
             <th>Description</th>
             <th>Original USD</th>
             <th>Converted ZAR</th>
@@ -20,6 +21,7 @@
             <tr>
   
                 <td>#@s.ContractId</td>
+                <td>@s.Contract?.Client?.Name</td>
                 <td>@s.Description</td>
                 <td>@s.CostUSD</td>
                 <td>@s.CostZAR</td>

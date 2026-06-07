@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PROG7311_POE.Data;
+using PROG7311_POE.Factories;
 using PROG7311_POE.Models;
 using PROG7311_POE.Service;
 
@@ -13,10 +14,12 @@ namespace PROG7311_POE.Controllers
     public class ServiceRequestsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly Service.ICurrencyService _currencyService;
 
-        public ServiceRequestsController(AppDbContext context)
+        public ServiceRequestsController(AppDbContext context, Service.ICurrencyService currencyService)
         {
             _context = context;
+            _currencyService = currencyService;
         }
 
         // GET: api/servicerequests
@@ -78,15 +81,15 @@ namespace PROG7311_POE.Controllers
             if (contract == null)
                 return BadRequest("Contract not found.");
 
-            // BUSINESS RULE 1: Only active contracts allowed
+            // Only active contracts allowed
             if (contract.Status == ContractStatus.Expired ||
                 contract.Status == ContractStatus.OnHold)
             {
                 return BadRequest("Cannot create Service Request. Contract is not active.");
             }
 
-            // BUSINESS RULE 2: Currency conversion
-            decimal rate = 18.5m;
+            // Currency conversion
+            var rate = await _currencyService.GetUsdToZarRate();
             request.CostZAR = request.CostUSD * rate;
 
             _context.ServiceRequests.Add(request);
