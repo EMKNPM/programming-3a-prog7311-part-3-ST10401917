@@ -5,7 +5,8 @@
 
 <form asp-action="Create" method="post">
 
-    <select name="ContractId" class="form-control mb-2">
+    <select asp-for="ContractId" class="form-control mb-2">
+        <option value="">-- Select a Contract --</option>
         @{
             var contracts = ViewBag.Contracts as List<Contract> ?? new List<Contract>();
         }
@@ -20,25 +21,29 @@
     <span asp-validation-for="ContractId" class="text-danger"></span>
 
     <div class="form-group">
-        <input name="Description" class="form-control mb-2" placeholder="Description" />
-    <span asp-validation-for="Description" class="text-danger"></span>
+        <input asp-for="Description" class="form-control mb-2" placeholder="Description" />
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <input name="CostUSD" id="usd" class="form-control mb-2" placeholder="USD" />
+    <input asp-for="CostUSD" id="usd" class="form-control mb-2" placeholder="USD" />
     <span asp-validation-for="CostUSD" class="text-danger"></span>
 
+    <div class="alert alert-info mb-2">
+        Estimated ZAR: R <span id="zar-display">0.00</span>
+    </div>
 
-    <input name="CostZAR" id="zar" class="form-control mb-2" placeholder="ZAR (auto)" readonly />
-
-    <button class="btn btn-success">Save</button>
+    <button type="submit" class="btn btn-success">Save</button>
 </form>
 
 <script>
+    // Your JavaScript remains exactly the same as it targets the IDs
     document.getElementById("usd").addEventListener("input", async function () {
         let res = await fetch('/ServiceRequests/GetRate');
-        let rate = await res.json();
-
-        document.getElementById("zar").value = this.value * rate;
+        if (res.ok) {
+            let rate = await res.json();
+            let usdVal = parseFloat(this.value) || 0;
+            document.getElementById("zar").value = (usdVal * rate).toFixed(2);
+        }
     });
 </script>
 

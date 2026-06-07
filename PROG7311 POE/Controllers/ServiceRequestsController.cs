@@ -50,11 +50,23 @@ namespace PROG7311_POE.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ServiceRequest request)
         {
+            // 1. Always check model state on the MVC side first
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
             var response = await _client.PostAsJsonAsync("api/servicerequests", request);
 
             if (!response.IsSuccessStatusCode)
             {
-                ModelState.AddModelError("", "Failed to create Service Request");
+                // 2. Extract the actual error message from the API response
+                var apiError = await response.Content.ReadAsStringAsync();
+
+                // If the API sent a clean string error, use it; otherwise fall back
+                var errorMessage = !string.IsNullOrEmpty(apiError) ? apiError : "Failed to create Service Request";
+
+                ModelState.AddModelError("", errorMessage);
                 return View(request);
             }
 

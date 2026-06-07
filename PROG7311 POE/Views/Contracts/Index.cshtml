@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Contract>
+﻿@using PROG7311_POE.Models
+@model IEnumerable<ContractReadDto>
 
 <h2>Contracts</h2>
 
@@ -40,7 +41,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.Client?.Name</td>
+            <td>@item.ClientName</td>
             <td>@item.Status</td>
             <td>@item.StartDate</td>
             <td>@item.EndDate</td>

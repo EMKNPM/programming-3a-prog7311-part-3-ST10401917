@@ -39,9 +39,9 @@ namespace PROG7311_POE.Controllers
         {
             AddAuthToken();
 
-            var data = await _client.GetFromJsonAsync<List<Contract>>("api/contracts");
+            var data = await _client.GetFromJsonAsync<List<ContractReadDto>>("api/contracts");
 
-            return View(data ?? new List<Contract>());
+            return View(data ?? new List<ContractReadDto>());
         }
 
         // -------------------------
@@ -76,15 +76,11 @@ namespace PROG7311_POE.Controllers
                 form.Add(new StringContent(contract.Status.ToString()), "Status");
                 form.Add(new StringContent(contract.ServiceLevel ?? "Standard"), "ServiceLevel");
 
-                // FILE
                 if (file != null && file.Length > 0)
                 {
                     var fileStream = file.OpenReadStream();
                     var fileContent = new StreamContent(fileStream);
-
-                    fileContent.Headers.ContentType =
-                        new MediaTypeHeaderValue("application/pdf");
-
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
                     form.Add(fileContent, "file", file.FileName);
                 }
 
@@ -94,11 +90,14 @@ namespace PROG7311_POE.Controllers
                 };
 
                 var response = await _client.SendAsync(request);
-
                 var body = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
+                    // Clear the local Model State dictionary to strip out 
+                    // any cached raw 'Contract' references before moving to the DTO page
+                    ModelState.Clear();
+
                     return RedirectToAction(nameof(Index));
                 }
 

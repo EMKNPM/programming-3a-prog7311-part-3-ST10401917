@@ -65,8 +65,13 @@ namespace PROG7311_POE.Controllers
 
         // POST: api/servicerequests
         [HttpPost]
-        public async Task<IActionResult> Create(ServiceRequest request)
+        public async Task<IActionResult> Create([FromBody] ServiceRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var contract = await _context.Contracts
                 .FirstOrDefaultAsync(c => c.ContractId == request.ContractId);
 
@@ -80,8 +85,8 @@ namespace PROG7311_POE.Controllers
                 return BadRequest("Cannot create Service Request. Contract is not active.");
             }
 
-            // BUSINESS RULE 2: Currency conversion (move logic here from MVC)
-            decimal rate = 18.5m; // OR call external API here later
+            // BUSINESS RULE 2: Currency conversion
+            decimal rate = 18.5m;
             request.CostZAR = request.CostUSD * rate;
 
             _context.ServiceRequests.Add(request);

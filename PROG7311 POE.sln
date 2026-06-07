@@ -9,6 +9,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG7311.API", "PROG7311.API\PROG7311.API.csproj", "{568C9179-D829-4D5D-ACEF-BAC868E44C55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG7311.Tests", "PROG7311.Tests\PROG7311.Tests.csproj", "{6F91EF70-E2E4-42C3-A382-F12B8FDEF0DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{568C9179-D829-4D5D-ACEF-BAC868E44C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{568C9179-D829-4D5D-ACEF-BAC868E44C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{568C9179-D829-4D5D-ACEF-BAC868E44C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F91EF70-E2E4-42C3-A382-F12B8FDEF0DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F91EF70-E2E4-42C3-A382-F12B8FDEF0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F91EF70-E2E4-42C3-A382-F12B8FDEF0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F91EF70-E2E4-42C3-A382-F12B8FDEF0DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,6 @@
 version: '3.9'
 
 services:
-
-  # -------------------------
-  # SQL SERVER DATABASE
-  # -------------------------
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver-db
@@ -18,12 +14,9 @@ services:
     volumes:
       - sql_data:/var/opt/mssql
 
-  # -------------------------
-  # WEB API (BACKEND)
-  # -------------------------
   api:
     build:
-      context: ./PROG7311.API   # <-- adjust to your API project folder
+      context: ./PROG7311.API 
       dockerfile: Dockerfile
     container_name: glms-backend-api
     depends_on:
@@ -36,12 +29,9 @@ services:
     networks:
       - app-network
 
-  # -------------------------
-  # MVC FRONTEND
-  # -------------------------
   mvc:
     build:
-      context: ./PROG7311 POE # <-- adjust to MVC project folder
+      context: ./PROG7311 POE
       dockerfile: Dockerfile
     container_name: glms-frontend-web
     depends_on:
@@ -54,15 +44,9 @@ services:
     networks:
       - app-network
 
-# -------------------------
-# NETWORK SHARED BY ALL CONTAINERS
-# -------------------------
 networks:
   app-network:
     driver: bridge
 
-# -------------------------
-# PERSISTENT DATABASE STORAGE
-# -------------------------
 volumes:
   sql_data:
