@@ -20,7 +20,7 @@ jobs:
 
     - name: Start API and Database Services
       run: |
-        docker-compose up -d
+        docker compose up -d
         echo "Waiting for services to spin up on port 8080..."
         sleep 15
 
@@ -35,4 +35,4 @@ jobs:
 
     - name: Stop Services
       if: always()
-      run: docker-compose down
+      run: docker compose down
