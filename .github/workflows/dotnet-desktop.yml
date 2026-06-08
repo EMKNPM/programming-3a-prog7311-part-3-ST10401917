@@ -19,10 +19,10 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: dotnet restore PROG7311_POE.sln
+      run: dotnet restore "PROG7311 POE.sln"
 
     - name: Build
-      run: dotnet build PROG7311_POE.sln --no-restore
+      run: dotnet build "PROG7311 POE.sln" --no-restore
 
     - name: Run tests
-      run: dotnet test PROG7311_POE.sln --no-build --verbosity normal
+      run: dotnet test "PROG7311 POE.sln" --no-build --verbosity normal
