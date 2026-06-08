@@ -18,6 +18,12 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
+    - name: Start API and Database Services
+      run: |
+        docker-compose up -d
+        echo "Waiting for services to spin up on port 8080..."
+        sleep 15
+
     - name: Restore dependencies
       run: dotnet restore "PROG7311 POE.sln"
 
@@ -26,3 +32,7 @@ jobs:
 
     - name: Run tests
       run: dotnet test "PROG7311 POE.sln" --no-build --verbosity normal
+
+    - name: Stop Services
+      if: always()
+      run: docker-compose down
